@@ -1,0 +1,27 @@
+{
+  "name": "imvi",
+  "version": "0.1.0",
+  "description": "batch `mv` files with `git mv -f`",
+  "main": "bin/imvi",
+  "scripts": {
+    "test": "tap ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elizar/imvi.git"
+  },
+  "keywords": [
+    "mv",
+    "git",
+    "mv",
+    "rename",
+    "move",
+    "files"
+  ],
+  "author": "Elizar Pepino",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elizar/imvi/issues"
+  },
+  "homepage": "https://github.com/elizar/imvi"
+}
