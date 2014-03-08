@@ -1,7 +1,7 @@
 {
   "name": "imvi",
-  "version": "0.1.0",
-  "description": "batch `mv` files with `git mv -f`",
+  "version": "0.1.1",
+  "description": "capitalized first letter of the files inside a folder",
   "main": "bin/imvi",
   "scripts": {
     "test": "tap ./test"
