@@ -1,0 +1,92 @@
+#!/usr/bin/env node
+var isVerbose, isRecursive, isHelp, argv;
+
+// Module Dependencies
+var fs      = require('fs');
+var path    = require('path');
+var cp      = require('child_process');
+var helpTxt = require('./help_txt.json');
+
+argv = process.argv.join(' ');
+
+if (argv.match(/\-r/ig) || argv.match(/\-\-recursive/ig)) {
+    isRecursive = true;
+}
+
+if (argv.match(/\-v/ig) || argv.match(/\-\-verbose/ig)) {
+    isVerbose = true;
+}
+
+if (argv.match(/\-h/ig) || argv.match(/\-\-help/ig)) {
+    isHelp = true;
+}
+
+// Check for -h ( Help ) argument
+if (!process.argv[2] || isHelp) {
+    return console.log(helpTxt.join('\n'));
+}
+
+// if command not found then print help text
+if (process.argv[2][0] === '-') return console.log(helpTxt.join('\n'));
+
+// else process path/dir
+_processPath(process.argv[2]);
+
+/*
+ * Process Path
+ *
+ * @param {String} dir - a valid directory
+ * @api private
+ */
+
+function _processPath(dir) {
+    var _dir = path.resolve(dir);
+
+    fs.readdir(_dir, function(err, files) {
+        if (err) {
+            return console.log('%s is an invalid Directory', _dir);
+        }
+
+        // print heading title if `-v` is set
+        if (isVerbose) {
+            console.log(' Renaming files under %s', _dir);
+            console.log();
+        }
+
+        files.forEach(function(file) {
+
+            var fileName    = file;
+            var newFileName = fileName[0].toUpperCase() + fileName.slice(1);
+            var filePath    = path.join(_dir, fileName);
+            var newFilePath = path.join(_dir, newFileName);
+
+            var isDirectory = fs.statSync(filePath).isDirectory();
+
+            // if dir file, then recurse
+            if (isDirectory) {
+
+                // if `-r` is present then recur
+                if (isRecursive) _processPath(path.join(_dir, fileName));
+
+                // otherwise, do nothing
+
+            } else { // otherwise rename it
+
+                cp.exec('git mv -f ' + filePath + ' ' + newFilePath, function(err, stdout, stderr) {
+
+                    // use fs.rename if `git mv -f` fails
+                    if (err) fs.rename(filePath, newFilePath);
+
+                    // print this if `-v` is present
+                    if (isVerbose) console.log('   Renaming %s to %s ... DONE!', fileName, newFileName);
+
+                });
+
+            }
+
+        });
+
+
+    });
+
+}

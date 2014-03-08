@@ -6,6 +6,9 @@
   "scripts": {
     "test": "tap ./test"
   },
+  "bin": {
+    "imvi": "./bin/imvi"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/elizar/imvi.git"
@@ -23,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/elizar/imvi/issues"
   },
-  "homepage": "https://github.com/elizar/imvi"
+  "homepage": "https://github.com/elizar/imvi",
+  "devDependencies": {
+    "tap": "^0.4.8"
+  }
 }

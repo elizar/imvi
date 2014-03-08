@@ -1,0 +1,10 @@
+[
+    "",
+    "  Usage: imvi [dir] [options] ",
+    "",
+    "  Options ",
+    "",
+    "    -h, --help          output usage information",
+    "    -r, --recursive     recursive mode",
+    "    -v, --verbose       verbose mode"
+]
